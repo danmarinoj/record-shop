@@ -7,7 +7,8 @@
                  [org.clojure/java.jdbc "0.7.12"]
                  [org.postgresql/postgresql "42.3.1"]
                  [ring/ring-core "1.15.0-RC1"]
-                 [ring/ring-jetty-adapter "1.15.0-RC1"]]
+                 [ring/ring-jetty-adapter "1.15.0-RC1"]
+                 [ring/ring-json "0.5.1"]]
   :main ^:skip-aot record-shop-server.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all

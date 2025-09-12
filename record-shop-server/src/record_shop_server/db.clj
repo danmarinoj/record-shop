@@ -3,8 +3,8 @@
 
 (def db-spec
   {:dbtype "postgresql"
-   :dbname "your_db_name"
+   :dbname "shop"
    :host "localhost"
    :port 5432
-   :user "your_user"
-   :password "your_password"})
+   :user "dd_user"
+   :password (System/getenv "DD_USER_PASSWORD")})
