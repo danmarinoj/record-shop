@@ -2,6 +2,7 @@
   (:require [ring.adapter.jetty :refer [run-jetty]]
             [ring.util.response :refer [response]]
             [ring.middleware.json :as json-middleware]
+            [ring.middleware.cors :refer [wrap-cors]]
             [record-shop-server.db :refer [db-spec]]
             [clojure.java.jdbc :as jdbc]))
 
@@ -56,5 +57,8 @@
 
 (defn -main []
   (run-jetty (-> app
-                 json-middleware/wrap-json-response)
-             {:port 3000}))
+                 json-middleware/wrap-json-response
+                 (wrap-cors
+                  :access-control-allow-origin [#"http://localhost:3000"]
+                  :access-control-allow-methods [:get :post :put :delete]))
+             {:port 3001}))

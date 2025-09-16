@@ -18,7 +18,7 @@ function Grid() {
   useEffect(() => {
     // Make GET request to fetch data
     axios
-      .get("http://127.0.0.1:3000/recently-added")
+      .get("http://127.0.0.1:3001/recently-added")
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -28,6 +28,11 @@ function Grid() {
         setLoading(false);
       });
   }, []);
+
+  // set image for each item
+  data.forEach((item, index) => {
+    item.image = `/${index}.jpg`;
+  });    
     
   return (
     <div style={{
@@ -36,14 +41,14 @@ function Grid() {
       gap: '2em',
       padding: '2em'
     }}>
-      {data.forEach((item, idx) => (
+	{data.map((item, idx) => (
         <div key={idx} style={{
           border: '1px solid #ccc',
           borderRadius: '8px',
           padding: '1em',
           textAlign: 'center'
-        }}>
-          <img src="https://via.placeholder.com/150" alt="album" style={{ width: '100%', borderRadius: '4px' }} />
+             }}>
+            <img src={item.image} alt="album" style={{ width: '100%', borderRadius: '4px' }} />
           <div style={{ marginTop: '1em' }}>
             <div><b>Album:</b> {item.name}</div>
             <div><b>Artist:</b> {item.artist}</div>

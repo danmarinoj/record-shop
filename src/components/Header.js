@@ -36,7 +36,7 @@ function Header() {
       </div>
       {/* Brand */}
       <div style={{ fontWeight: 'bold', fontSize: '1.5em' }}>
-        Default Brand
+          <img src="logo.png" alt="logo" width="100"/>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {/* Search bar */}
