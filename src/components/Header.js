@@ -35,8 +35,8 @@ function Header() {
         </button>
       </div>
       {/* Brand */}
-      <div style={{ fontWeight: 'bold', fontSize: '1.5em' }}>
-          <img src="logo.png" alt="logo" width="100"/>
+	<div style={{ fontFamily: 'EvilEmpire', fontWeight: 'bold', fontSize: '1.7em' }}>
+	  Double D's Record Paradise
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {/* Search bar */}

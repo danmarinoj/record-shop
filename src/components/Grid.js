@@ -46,7 +46,8 @@ function Grid() {
           border: '1px solid #ccc',
           borderRadius: '8px',
           padding: '1em',
-          textAlign: 'center'
+          textAlign: 'center',
+	  backgroundColor: 'white'
              }}>
             <img src={item.image} alt="album" style={{ width: '100%', borderRadius: '4px' }} />
           <div style={{ marginTop: '1em' }}>

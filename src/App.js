@@ -6,8 +6,8 @@ function App() {
   return (
     <div>
       <Header />
-      <div style={{ marginTop: '2em', textAlign: 'center' }}>
-        <h2>New Arrivals</h2>
+      <div style={{ marginTop: '2em', textAlign: 'center', color: 'white' }}>
+        <h1>New Arrivals</h1>
       </div>
       <Grid />
     </div>

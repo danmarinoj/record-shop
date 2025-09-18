@@ -1,10 +1,23 @@
+@font-face {
+    font-family: EvilEmpire;
+    src: url(ee.ttf);
+}
+
 body {
+  background-image: url(80swallpaper.jpg);
+  background-size: 70% 70%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: xx-large;
+  font-family: EvilEmpire;
+  -webkit-text-stroke: 2px black;
 }
 
 code {
