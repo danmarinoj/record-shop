@@ -7,45 +7,10 @@
             [clojure.java.jdbc :as jdbc]))
 
 (defn get-recently-added []
-  ;; (jdbc/query db-spec ["SELECT name, artist, year, price FROM music_inventory ORDER BY insertion_timestamp DESC LIMIT 6"])
-  (print "serving request")
-  '(
-    {
-     :name "Magical Mystery Tour"
-     :artist "The Beatles"
-     :year 1967
-     :price 15
-  }
-  {
-   :name "My Son, the Celebrity"
-   :artist "Allan Sherman"
-   :year 1963
-   :price 15
-  }
-  {
-    :name "Terrapin Station"
-    :artist "Grateful Dead"
-    :year 1977
-    :price 19
-  }
-  {
-    :name "Greatest Hits"
-    :artist "Creed"
-    :year 2004
-    :price 23
-  }
-  {
-   :name "Enema of the State"
-    :artist "Blink-182"
-    :year 1999
-    :price 25
-  }
-  {
-    :name "Islands"
-    :artist "King Crimson"
-    :year 1971
-    :price 15
-  }))
+  (jdbc/query db-spec ["SELECT product_no, name, artist, year, price FROM music_inventory ORDER BY insertion_timestamp DESC LIMIT 6"]))
+
+(defn get-album-details [product-number]
+  (jdbc/query db-spec ["SELECT name, artist, year, price"]))
 
 (defn recently-added-handler [request]
   (response (get-recently-added)))
@@ -62,3 +27,5 @@
                   :access-control-allow-origin [#"http://localhost:3000"]
                   :access-control-allow-methods [:get :post :put :delete]))
              {:port 3001}))
+
+;; [{"product_no":8,"name":"One Foot In The Gutter: A Treasury Of Soul","artist":"The Dave Bailey Sextet","year":1995,"price":0},{"product_no":7,"name":"Down On The Farm","artist":"Little Feat","year":1979,"price":0},{"product_no":6,"name":"Fuego","artist":"Phish","year":2014,"price":0},{"product_no":5,"name":"Tales From Topographic Oceans","artist":"Yes","year":1976,"price":0},{"product_no":4,"name":"Concert By The Sea","artist":"Erroll Garner","year":1970,"price":0},{"product_no":3,"name":"Endless Summer","artist":"The Beach Boys","year":0,"price":0}]

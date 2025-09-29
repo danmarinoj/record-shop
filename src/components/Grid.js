@@ -31,7 +31,7 @@ function Grid() {
 
   // set image for each item
   data.forEach((item, index) => {
-    item.image = `/${index}.jpg`;
+    item.image = `https://ddrecords.s3.us-east-1.amazonaws.com/albumcovers/${item.product_no}.jpg`;
   });    
     
   return (
