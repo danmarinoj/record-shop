@@ -1,16 +1,16 @@
 import React from 'react';
-import Header from './components/Header';
-import Grid from './components/Grid';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainPage from './pages/MainPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 
 function App() {
   return (
-    <div>
-      <Header />
-      <div style={{ marginTop: '2em', textAlign: 'center', color: 'white' }}>
-        <h1>New Arrivals</h1>
-      </div>
-      <Grid />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/product/:product_no" element={<ProductDetailsPage />} />
+      </Routes>
+    </Router>
   );
 }
 

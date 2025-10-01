@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const defaultImage = "https://via.placeholder.com/150";
@@ -32,6 +33,7 @@ function Grid() {
   // set image for each item
   data.forEach((item, index) => {
     item.image = `https://ddrecords.s3.us-east-1.amazonaws.com/albumcovers/${item.product_no}.jpg`;
+    item.link = `/product/${item.product_no}`;
   });    
     
   return (
@@ -41,20 +43,22 @@ function Grid() {
       gap: '2em',
       padding: '2em'
     }}>
-	{data.map((item, idx) => (
+      {data.map((item, idx) => (
         <div key={idx} style={{
-          border: '1px solid #ccc',
-          borderRadius: '8px',
-          padding: '1em',
-          textAlign: 'center',
-	  backgroundColor: 'white'
+	       border: '1px solid #ccc',
+	       borderRadius: '8px',
+	       padding: '1em',
+	       textAlign: 'center',
+	       backgroundColor: 'white'
              }}>
+	  <Link to={item.link}>
             <img src={item.image} alt="album" style={{ width: '100%', borderRadius: '4px' }} />
+	  </Link>
           <div style={{ marginTop: '1em' }}>
-            <div><b>Album:</b> {item.name}</div>
-            <div><b>Artist:</b> {item.artist}</div>
-            <div><b>Year:</b> {item.year}</div>
-            <div><b>Price:</b> {item.price}</div>
+            <div>{item.name}</div>
+            <div>by {item.artist}</div>
+            <div>{item.year}</div>
+            <div>${item.price}</div>
           </div>
         </div>
       ))}

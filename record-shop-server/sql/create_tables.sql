@@ -16,6 +16,7 @@ GRANT USAGE, SELECT, UPDATE ON music_inventory_product_no_seq TO dd_user;
 GRANT SELECT ON collection TO dd_user;
 GRANT SELECT ON release TO dd_user;
 GRANT SELECT ON sales TO dd_user;
+GRANT SELECT ON track TO dd_user;
 
 -- collection
 -- d_coll_instance_id      | bigint |           | not null | 

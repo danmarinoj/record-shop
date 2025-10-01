@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -23,16 +24,18 @@ function Header() {
           &#9776;
         </button>
         {/* Home button */}
-        <button style={{
-          background: '#444',
-          color: '#fff',
-          border: 'none',
-          padding: '0.5em 1em',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}>
+	<Link to='/'>
+          <button style={{
+            background: '#444',
+            color: '#fff',
+	    border: 'none',
+            padding: '0.5em 1em',
+            borderRadius: '4px',
+            cursor: 'pointer'
+	  }}>
           Home
-        </button>
+          </button>
+        </Link>
       </div>
       {/* Brand */}
 	<div style={{ fontFamily: 'EvilEmpire', fontWeight: 'bold', fontSize: '1.7em' }}>

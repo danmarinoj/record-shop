@@ -39,3 +39,4 @@ pom.xml.asc
 .hgignore
 .hg/
 .lein-repl-history
+.nrepl-port
