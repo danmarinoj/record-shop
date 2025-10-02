@@ -106,9 +106,17 @@ GRANT SELECT ON track TO dd_user;
 -- * d_track_name
 
 CREATE TABLE release_metadata (
-release_id BIGINT,
+release_id BIGINT PRIMARY KEY,
 genre TEXT,
 year INTEGER,
 format TEXT
 );
 GRANT SELECT, INSERT ON release_metadata TO dd_user;
+
+CREATE TABLE decades (
+decade INTEGER PRIMARY KEY
+);
+GRANT SELECT, INSERT ON decades TO dd_user;
+
+-- pgloader command (inefficient since recreates all every time)
+-- pgloader --with "create no tables" --with truncate sqlite:///path/to/.discodos/discobase.db pgsql://postgres:$POSTGRES_PASSWORD@localhost/shop

@@ -4,24 +4,26 @@
             [ring.middleware.json :as json-middleware]
             [ring.middleware.params :as params-middleware]
             [ring.middleware.cors :refer [wrap-cors]]
-            [record-shop-server.db :refer [db-spec]]
-            [clojure.java.jdbc :as jdbc]))
+            [record-shop-server.db :refer [get-genres
+                                           get-decades
+                                           get-by-genre
+                                           get-by-decade
+                                           get-recently-added
+                                           get-album-details]]))
 
-(defn get-recently-added []
-  (jdbc/query db-spec ["SELECT product_no, name, artist, year, price FROM music_inventory ORDER BY insertion_timestamp DESC LIMIT 6"]))
+(defn genres-handler [request]
+  (response
+   (map #(:genre %) (get-genres))))
 
-(defn get-album-details [product-number]
-  (merge
-   {:tracks
-    (jdbc/query db-spec [(str "SELECT d_track_no AS track_number, d_track_name AS track_name "
-                              "FROM track INNER JOIN ("
-                              "SELECT release_id FROM music_inventory WHERE product_no = "
-                              product-number
-                              ") ON release_id = d_release_id ORDER BY track_number ASC")])}
-   (first
-    (jdbc/query db-spec [(str
-                          "SELECT name, artist, year, price FROM music_inventory WHERE product_no = "
-                          product-number)]))))
+(defn decades-handler [request]
+  (response
+   (map #(:decade %) (get-decades))))
+
+(defn by-genre-handler [{params :query-params}]
+  (response (get-by-genre (get params "genre"))))
+
+(defn by-decade-handler [{params :query-params}]
+  (response (get-by-decade (Integer/parseInt (get params "decade")))))
 
 (defn recently-added-handler [request]
   (response (get-recently-added)))
@@ -31,6 +33,10 @@
 
 (defn app [request]
   (case (:uri request)
+    "/genres" (genres-handler request)
+    "/decades" (decades-handler request)
+    "/by-genre" (by-genre-handler request)
+    "/by-decade" (by-decade-handler request)
     "/recently-added" (recently-added-handler request)
     "/album-details" (album-details-handler request)
     (response {:error "Not found"})))

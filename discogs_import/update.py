@@ -1,6 +1,7 @@
 import os
 import discogs_client
 import psycopg
+from math import floor
 
 def get_metadata(discogs, release_id):
     release = discogs.release(release_id)
@@ -21,6 +22,21 @@ def get_new_releases(conn):
             release_id = tuple_result[0]
             yield release_id
 
+def insert_metadata(conn, release_id, metadata):
+    with conn.cursor() as cur:
+        for metadata_item in metadata:
+            cur.execute(
+                """INSERT INTO release_metadata (release_id, genre, year, format)
+                VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING""",
+                (
+                    release_id,
+                    metadata_item["genre"],
+                    metadata_item["year"],
+                    metadata_item["format"]
+                )
+            )
+        conn.commit()
+
 def insert_item(conn, release_id):
     with conn.cursor() as cur:
         cur.execute(
@@ -29,22 +45,16 @@ def insert_item(conn, release_id):
             INNER JOIN
             (SELECT * FROM release_metadata WHERE release_id = {release_id} LIMIT 1)
             ON release_id = discogs_id""")
-    conn.commit()
-            
-def insert_metadata(conn, release_id, metadata):
+
+def insert_decade(conn, release_id):
     with conn.cursor() as cur:
-        for metadata_item in metadata:
-            cur.execute(
-                """INSERT INTO release_metadata (release_id, genre, year, format)
-                VALUES (%s, %s, %s, %s)""",
-                (
-                    release_id,
-                    metadata_item["genre"],
-                    metadata_item["year"],
-                    metadata_item["format"]
-                )
-            )
-    conn.commit()
+        result = conn.execute(f"SELECT year FROM release_metadata WHERE release_id = {release_id}")
+        year = result.fetchone()[0]
+        decade = floor(year/10.0)*10
+        cur.execute(
+            "INSERT INTO decades (decade) VALUES (%s) ON CONFLICT DO NOTHING",
+            (decade,)
+        )
 
 def main():
     pg_pass = os.getenv("DD_USER_PASSWORD")
@@ -59,6 +69,8 @@ def main():
             metadata = get_metadata(discogs, release_id)
             insert_metadata(conn, release_id, metadata)
             insert_item(conn, release_id)
+            insert_decade(conn, release_id)
+        conn.commit()
             
 if __name__ == "__main__":
     main()
