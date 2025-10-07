@@ -2,16 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const defaultImage = "https://via.placeholder.com/150";
-const items = Array.from({ length: 9 }).map((_, i) => ({
-  artist: "Artist " + (i + 1),
-  album: "Album " + (i + 1),
-  year: 2000 + i,
-  price: "$" + (10 + i),
-  image: defaultImage
-}));
-
-function Grid() {
+function Grid({ endpoint }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +10,7 @@ function Grid() {
   useEffect(() => {
     // Make GET request to fetch data
     axios
-      .get("http://127.0.0.1:3001/recently-added")
+      .get(`http://127.0.0.1:3001/${endpoint}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);

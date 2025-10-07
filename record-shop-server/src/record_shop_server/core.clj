@@ -11,13 +11,12 @@
                                            get-recently-added
                                            get-album-details]]))
 
-(defn genres-handler [request]
+(defn genres-decades-handler [request]
   (response
-   (map #(:genre %) (get-genres))))
-
-(defn decades-handler [request]
-  (response
-   (map #(:decade %) (get-decades))))
+   {:genres
+    (map #(:genre %) (get-genres))
+    :decades
+    (map #(:decade %) (get-decades))}))
 
 (defn by-genre-handler [{params :query-params}]
   (response (get-by-genre (get params "genre"))))
@@ -33,8 +32,7 @@
 
 (defn app [request]
   (case (:uri request)
-    "/genres" (genres-handler request)
-    "/decades" (decades-handler request)
+    "/genres-decades" (genres-decades-handler request)
     "/by-genre" (by-genre-handler request)
     "/by-decade" (by-decade-handler request)
     "/recently-added" (recently-added-handler request)

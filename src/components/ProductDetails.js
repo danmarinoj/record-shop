@@ -21,7 +21,7 @@ function ProductDetails({ product_no }) {
   }, []);
   const image = `https://ddrecords.s3.us-east-1.amazonaws.com/albumcovers/${product_no}.jpg`;
   const tracks = data?.tracks || [];
-  console.log(tracks);
+
   return (
     <div style={{ marginTop: '2em', textAlign: 'center', color: 'white' }}>
       <h1>{data.name}</h1>

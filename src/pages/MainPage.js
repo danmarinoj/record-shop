@@ -8,7 +8,7 @@ const MainPage = () => (
     <div style={{ marginTop: '2em', textAlign: 'center', color: 'white' }}>
       <h1>New Arrivals</h1>
     </div>
-    <Grid />
+    <Grid endpoint="recently-added"/>
   </div>
 );
 
