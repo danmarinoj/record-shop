@@ -9,8 +9,11 @@
                  [ring/ring-core "1.15.0-RC1"]
                  [ring/ring-jetty-adapter "1.15.0-RC1"]
                  [ring/ring-json "0.5.1"]
-                 [ring-cors "0.1.13"]]
+                 [ring-cors "0.1.13"]
+                 [ring-logger/ring-logger "1.1.1"]
+                 [clj-log4j2/clj-log4j2 "0.4.0"]]
   :main ^:skip-aot record-shop-server.core
   :target-path "target/%s"
+  :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j2-factory"]
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

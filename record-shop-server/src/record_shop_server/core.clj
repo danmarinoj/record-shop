@@ -4,6 +4,7 @@
             [ring.middleware.json :as json-middleware]
             [ring.middleware.params :as params-middleware]
             [ring.middleware.cors :refer [wrap-cors]]
+            [ring.logger :as logger]
             [record-shop-server.db :refer [get-genres
                                            get-decades
                                            get-by-genre
@@ -41,12 +42,20 @@
 
 (defn -main []
   (run-jetty (-> app
+                 logger/wrap-with-logger
                  json-middleware/wrap-json-response
                  params-middleware/wrap-params
                  (wrap-cors
-                  :access-control-allow-origin [#"http://localhost:3000"]
+                  :access-control-allow-origin [#"http://localhost:3000"
+                                                #"https://localhost:3000"
+                                                #"https://doubledsrecords.com"]
                   :access-control-allow-methods [:get :post :put :delete]))
-             {:port 3001}))
+             {:port 3001
+              :ssl? true
+              :ssl-port 3002
+              :keystore "keystore.jks"
+              :key-password (System/getenv "KEYSTORE_PASS")
+              }))
 
 ;; [{"product_no":8,"name":"One Foot In The Gutter: A Treasury Of Soul","artist":"The Dave Bailey Sextet","year":1995,"price":0},{"product_no":7,"name":"Down On The Farm","artist":"Little Feat","year":1979,"price":0},{"product_no":6,"name":"Fuego","artist":"Phish","year":2014,"price":0},{"product_no":5,"name":"Tales From Topographic Oceans","artist":"Yes","year":1976,"price":0},{"product_no":4,"name":"Concert By The Sea","artist":"Erroll Garner","year":1970,"price":0},{"product_no":3,"name":"Endless Summer","artist":"The Beach Boys","year":0,"price":0}]
 

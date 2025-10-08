@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Squash as Hamburger } from "hamburger-react";
-import axios from "axios";
+import api from "../api";
 
 function Header() {
   const [data, setData] = useState([]);
@@ -14,8 +14,8 @@ function Header() {
 
   useEffect(() => {
     // Make GET request to fetch data
-    axios
-      .get("http://127.0.0.1:3001/genres-decades")
+    api
+      .get("/genres-decades")
       .then((response) => {
         setData(response.data);
         setLoading(true);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 function Grid({ endpoint }) {
   const [data, setData] = useState([]);
@@ -9,8 +9,8 @@ function Grid({ endpoint }) {
 
   useEffect(() => {
     // Make GET request to fetch data
-    axios
-      .get(`http://127.0.0.1:3001/${endpoint}`)
+    api
+      .get(`/${endpoint}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);

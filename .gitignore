@@ -40,3 +40,4 @@ pom.xml.asc
 .hg/
 .lein-repl-history
 .nrepl-port
+keystore.jks

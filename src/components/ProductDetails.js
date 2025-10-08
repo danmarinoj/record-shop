@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 function ProductDetails({ product_no }) {
   const [data, setData] = useState([]);
@@ -8,8 +8,8 @@ function ProductDetails({ product_no }) {
 
   useEffect(() => {
     // Make GET request to fetch data
-    axios
-      .get(`http://127.0.0.1:3001/album-details?product_no=${product_no}`)
+    api
+      .get(`/album-details?product_no=${product_no}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);
